@@ -1,0 +1,188 @@
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
+<script>
+// This example displays an address form, using the autocomplete feature
+// of the Google Places API to help users fill in the information.
+
+var placeSearch, autocomplete;
+var componentForm = {
+  street_number: 'short_name',
+  route: 'long_name',
+  locality: 'long_name',
+  administrative_area_level_1: 'short_name',
+  country: 'long_name',
+  postal_code: 'short_name'
+};
+
+function initialize() {
+  alert("call initialize");
+  // Create the autocomplete object, restricting the search
+  // to geographical location types.
+  autocomplete = new google.maps.places.Autocomplete(
+      /** @type {HTMLInputElement} */(document.getElementById('autocomplete')),
+      { types: ['geocode'] });
+  // When the user selects an address from the dropdown,
+  // populate the address fields in the form.
+  google.maps.event.addListener(autocomplete, 'place_changed', function() {
+    fillInAddress();
+  });
+}
+ 
+
+function loadScript() {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp' +
+      '&signed_in=true&callback=initialize';
+  document.body.appendChild(script);
+}
+
+window.onload = loadScript;
+
+// [START region_fillform]
+function fillInAddress() {
+  // Get the place details from the autocomplete object.
+  var place = autocomplete.getPlace();
+  alert("call it");
+  for (var component in componentForm) {
+    document.getElementById(component).value = '';
+    document.getElementById(component).disabled = false;
+  }
+
+  // Get each component of the address from the place details
+  // and fill the corresponding field on the form.
+  for (var i = 0; i < place.address_components.length; i++) {
+    var addressType = place.address_components[i].types[0];
+    if (componentForm[addressType]) {
+      var val = place.address_components[i][componentForm[addressType]];
+      document.getElementById(addressType).value = val;
+    }
+  }
+}
+// [END region_fillform]
+
+// [START region_geolocation]
+// Bias the autocomplete object to the user's geographical location,
+// as supplied by the browser's 'navigator.geolocation' object.
+function geolocate() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var geolocation = new google.maps.LatLng(
+          position.coords.latitude, position.coords.longitude);
+      var circle = new google.maps.Circle({
+        center: geolocation,
+        radius: position.coords.accuracy
+      });
+       autocomplete.setBounds(circle.getBounds());
+    });
+  }
+}
+// [END region_geolocation]
+
+    </script>
+    <script type="text/javascript">
+  $(document).ready(function(){
+    
+    initialize();
+  })
+</script>
+      
+   
+
+<%= form_for @event ,:html =>{:onload => "initialize()"} do |f| %>
+  <% if @event.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>
+
+      <ul>
+      <% @event.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    
+    <%= f.text_field :name, :class=> "form-control" ,:placeholder=>"Event Name"%>
+  </div>
+  <% if Businessowner.where(id:session[:user_id]).first.role=="Admin" && !@event.is_approved && @event.id!=nil%>
+  <div class="field">
+    
+    <%= f.text_field :event_type, :class=> "form-control" ,:placeholder=>"Event Type" %>
+  </div>
+  <%end%>
+  <div class="field">
+    <div class='input-group date' id='datetimepicker1'>
+                    <input type='text' class="form-control" name="event[start_time]" placeholder="Event Start Time" />
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+    
+  </div>
+  <br/>
+  <div class="field">
+    
+    <div class='input-group date' id='datetimepicker2'>
+                    <input type='text' class="form-control" name="event[end_time]" placeholder="Event End Time" />
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+  </div>
+
+  <script type="text/javascript">
+            $(function () {
+                $('#datetimepicker1').datetimepicker();
+                $('#datetimepicker2').datetimepicker();
+            });
+        </script>
+<br/>
+  <div id="locationField" class="field">
+      <input id="autocomplete" placeholder="Enter your address"
+             onfocus="geolocate()" type="text" class="form-control"></input>
+    </div>
+    <div class="field">
+    <input class="form-control" id="street_number"
+              disabled="true" placeholder="Enter Street Number" name="event[street_address]"></input>
+        <input class="form-control" id="route"
+              disabled="true" placeholder="Enter Route"></input>
+        <input  id="locality"
+              disabled="true" class="form-control" placeholder="Enter Locality"></input>
+        <input class="form-control"
+              id="administrative_area_level_1" disabled="true" placeholder="Enter Admin area level 1"></input>
+         <input class="form-control" id="postal_code"
+              disabled="true"   placeholder="Enter Postal Code" name="event[zip]"></input>
+              <input class="form-control"
+              id="country" disabled="true"   placeholder="Enter Country" name="event[country]"></input>
+     </div>
+        
+      
+        
+        
+        
+       
+      
+      
+    
+  
+  <div class="field">
+    
+    <%= f.text_area :description,:cols=> 20, :rows=>20,  :class=> "form-control" ,:placeholder=>"Event Description" %>
+  </div>
+  
+
+  <%= f.file_field :avatar %>
+  
+  <br/>
+  <div class="actions">
+    <%= f.hidden_field :source, :value => "normal" %>
+    <%= f.submit  :class=>"btn btn-primary" %>
+    <% if Businessowner.where(id:session[:user_id]).first.role=="Admin" && !@event.is_approved && @event.id!=nil%>
+    <%= f.submit "Approve Event" , id:"approve-btn",class: "btn btn-primary", required: "required"  %>
+    <%end%>
+    
+  </div>
+  
+<% end %>
+
+   
+

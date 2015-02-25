@@ -1,0 +1,341 @@
+
+		<div class="page">
+		
+	
+		
+			<nav id="event-navbar" class="fill-darknav navbar push-0-xs " role="navigation">
+
+				<div class="col-xs-12">
+					<div class="container">
+						<div class="navbar-header">
+							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1"><span></span></button>
+							<a class="navbar-brand large" href="http://eventifier.com/"><div class="logo"></div></a>
+						</div>
+						<div class="collapse navbar-collapse" id="navbar-collapse-1">
+							<!--  <ul class="nav pull-left edited-nav">
+						    <form class="form-search nav-search" action="/search" method="get" style="">
+			        		<div style='display:none'><input type='hidden' name='csrfmiddlewaretoken' value='GQoYU1mDcXGbXFJLVVV2bHuA5WpBVhtS' /></div>
+						    <input name="q" class="span3 search-box" placeholder="Search for an Event" style="" id="appendedInputButton" size="16" type="text">
+						    </form>
+						    </ul> -->
+							<ul class="nav navbar-nav navbar-right legible-prose">
+								
+									<li class="block-nav"><a href="/Dashboard#" class="lightgreen">Dashboard</a></li>
+									
+										<li class="block-nav"><a href="/Dashboard#" class="active" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap" ><i class="fa fa-plus"></i>&nbsp;Add an Event</a></li>
+										<li class="clear-left block-nav">
+											<div class="btn-group">
+												<a class="dropdown-toggle" data-toggle="dropdown" href="/Dashboard#"> <%= @businessowner.email %>&nbsp;&nbsp;<i class="fa fa-chevron-down"></i></a>
+												<ul class="dropdown-menu">
+													<li><a href="/Dashboard"><i class="fa fa-th-list"></i>&nbsp;&nbsp;My Events</a></li>
+													<li><a href="/Dashboard#" class="active" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add an Event</a></li>
+													<li><a href="/account/logout"><i class="fa fa-sign-out"></i>&nbsp;&nbsp;Logout</a></li>
+												</ul>
+											</div>
+										</li>
+									
+								
+							</ul>
+						</div>
+					</div>
+				</div>
+			</nav>
+		
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+  <div class="modal-dialog" style="background-color:white;border-radius:6px;width:25vw;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel" style="text-align:center">Create Your Event</h4>
+      </div>
+      <div class="modal-body" style="text-align:center">
+        
+          <div class="form-group">
+            <a role="button" href="/events/new" class="btn btn-primary" style="width:15vw">Create New Event Manually</a>
+          </div>
+          
+          <div class="form-group">
+            <button class="btn btn-primary" style="width:15vw"><i class="fa fa-facebook" ></i> Import from Facebook</button>
+          </div>
+          <%= form_for(@event , url:{action:"create", controller:"events"}) do |f|%>
+          <div class="form-group" >
+            <label for="facebook-import" class="control-label">Import from facebook event link</label><br/>
+            <span></span>
+            <%= f.text_field :club_url, id: "facebook-import", class:"form-control", placeholder: "Paste url here",style: "width:15vw;display:inline-block;"%>
+            
+            <%= f.hidden_field :source, :value => "facebook" %>
+            <%= f.submit "Import" ,class: "btn btn-primary"  %>
+            <span></span>
+          </div>
+          <% end%>
+      </div>
+      
+    </div>
+  </div>
+</div>
+	
+<style>
+.form-group span{
+	display: inline-block;
+    width:1vw;
+}
+</style>
+	
+		
+	
+
+	
+<section class="page-head fill-blue-pattern">
+  <div class="container push-4-bottom">
+    <div class="text-center white">
+		<h1 class="push-2-top thin extralarge-prose prose-type"><%= @headline%></h1>
+		
+    </div>
+  </div>
+</section>
+
+	
+	
+
+		<div class="page-content">
+		
+<section class="fill-light">
+	<div class="container" style="min-height:400px;">
+		<div class="row push-4-top">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<% @events.each do |event|%>
+					<div class="row">
+						
+						<ul class="list-silent nopad-ul link-silent">
+							
+								<li class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 space-2-bottom">
+									<div class="eventlist rounded-rect">
+										
+											<!-- <div class="ribbon-wrapper-green regular"><div class="ribbon-green">&nbsp;&nbsp;&nbsp;&nbsp;Sample Event</div></div> -->
+										
+										<div class="row push-line push-0-xs-top">
+											<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12 pad-4-left pad-1-xs-left push-1-top push-0-xs-top">
+												<div class="row">
+													<div class="col-sm-12">
+														<div class="event-box block contain-width centered" style="margin-bottom: 0">
+														<% if event.picture_url!=nil %>
+															<div class="event-box-body" style="background-image:url(&#39;<%= event.picture_url%>&#39;);height:200px;">
+															<% else %>
+															<div class="event-box-body" style="background-image:url(&#39;<%= event.avatar.url%>&#39;);height:200px;">
+															<%end%>
+																<div class="event-content-box">
+																	<div class="card-logo-container">
+																		
+																	</div>
+																	<div class="card-info-container">
+																		<a href="http://eventifier.com/event/sample_ymohit2316_3487" class="white">
+																			<h2 class="normal box-title push-1q-top">
+																			<%= event.name %></h2>
+																			
+																				
+																					<h4 class="normal prose-type regular"><%= event.start_time %></h4>
+																				
+																				
+																					<h4 class="normal prose-type regular"> <%= event.city %></h4>
+																				
+																			
+																			<!-- <div class="lightblue tiny"><em></em></div> -->
+																		</a>
+																	</div>
+																	<!-- <ul class="number-box-list secondary-prose nopad-ul thin" style="position:absolute;bottom:0;">
+																		<li class="number-box-display"><a href="http://eventifier.com/event/sample_ymohit2316_3487" class="number-box white"><div class="semibold">148</div>Photos</a></li>
+																		<li class="number-box-display"><a href="http://eventifier.com/event/sample_ymohit2316_3487/videos" class="number-box white"><div class="semibold">4</div>Videos</a></li>
+																		<li class="number-box-display"><a href="http://eventifier.com/event/sample_ymohit2316_3487/tweets" class="number-box white"><div class="semibold">899</div>Tweets</a></li>
+																		<li class="slides-box-display"><a href="http://eventifier.com/event/sample_ymohit2316_3487/slides" class="number-box white"><div class="semibold">0</div>Slides</a></li>
+																		<li class="number-box-display"><a href="http://eventifier.com/event/sample_ymohit2316_3487/contributors" class="red-black number-box white"><div class="semibold">207</div>Contributors</a></li>
+																	</ul> -->
+																</div>
+																<div class="event-box-footer"></div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-12 pad-2-xs">
+														
+														<div class="text-center space-1-top">
+															
+																
+															
+														</div>
+													</div>
+												</div>
+											</div>
+
+											<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 push-half-xs-top">
+												<div class="centered-list">
+													<ul id="event-settings" class="list-silent nopad-ul">
+														<li><a href="/events/<%=event.id%>" class="dark"><i class="fa fa-eye"></i><span class="hidden-xs">&nbsp;&nbsp;View Event</span></a></li>
+														<li><a href="/events/<%=event.id%>/edit" class="dark"><i class="fa fa-edit"></i><span class="hidden-xs">&nbsp;&nbsp;Edit Event</span></a></li>
+														
+															<!-- <li><a href="http://eventifier.com/event/sample_ymohit2316_3487/analytics/" class="dark"><i class="fa fa-bar-chart-o"></i><span class="hidden-xs">&nbsp;&nbsp;Analytics</span></a></li>
+														
+														
+															<li><a href="http://eventifier.com/event/sample_ymohit2316_3487/livewall/edit" class="dark"><i class="fa fa-desktop"></i><span class="hidden-xs">&nbsp;&nbsp;Livewall</span></a></li>
+														
+														<li><a href="http://eventifier.com/event/sample_ymohit2316_3487/embed_options/" class="dark"><i class="fa fa-code"></i><span class="hidden-xs">&nbsp;&nbsp;Embed options</span></a></li> -->
+														<li><a href="http://eventifier.com/dashboard#sample_ymohit2316_3487" class="pointer dark" data-toggle="modal"><i class="fa fa-trash-o"></i><span class="hidden-xs">&nbsp;&nbsp;Delete Event</span></a></li>
+
+															
+														
+															<!-- <li><a href="http://eventifier.com/event/sample_ymohit2316_3487/upgrade/" class="dark"><i class="fa fa-arrow-circle-o-up"></i><span class="hidden-xs">&nbsp;&nbsp;Plan:&nbsp;&nbsp;<span class="label label-success">Professional</span></span></a></li> -->
+														
+													</ul>
+													<div id="sample_ymohit2316_3487" class="modal fade link-silent" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+														<div class="modal-dialog">
+															<div class="modal-content">
+																<div class="modal-body fill-light">
+																	<button type="button" class="close modal-dismiss" data-dismiss="modal" aria-hidden="true">×</button>
+																	<div style="margin: -20px -20px 0 -20px">
+																		<h3 class="legible-prose normal push-1q normal prose-type pad-1 fill-error-red top-borders"><i class="fa fa-warning"></i> Are you sure you want to delete 'Sample Event'?</h3>
+																		<p class="regular error-red pad-0 fill-white push-1 pad-1"><strong>Warning:</strong> If you delete it, you will loose all the event data including the data on your embeds.</p>
+																	</div>
+																	<div class="block push-1-top">
+																		<div class="event-box block contain-width centered" style="float: none !important; width: 365px;">
+																			<div class="event-box-body" style="background-image:url(&#39;https://pbs.twimg.com/profile_banners/303465731/1406042677/web_retina&#39;);height:200px;">
+																				<div class="event-content-box">
+																					<div class="card-logo-container">
+																						<a class="flushleft pad-3q push-3q" href="http://eventifier.com/event/sample_ymohit2316_3487" title="Sample Event">
+																							<img src="./Dashboard   Eventifier_files/a9283b8de280863c46a4ab7b2a9caad1.png" width="70">
+																						</a>
+																					</div>
+																					<div class="card-info-container">
+																						<a href="http://eventifier.com/event/sample_ymohit2316_3487" class="white">
+																							<h2 class="normal box-title push-1q-top">Sample Event</h2>
+																							
+																								
+																									<h4 class="normal prose-type regular">17-18 October 2014</h4>
+																								
+																								
+																									<h4 class="normal prose-type regular">Dayton,  Ohio</h4>
+																								
+																							
+																							<!-- <div class="lightblue tiny"><em></em></div> -->
+																						</a>
+																					</div>
+																					<ul class="number-box-list secondary-prose nopad-ul thin" style="position:absolute;bottom:0;">
+																						<li class="number-box-display"><a href="http://eventifier.com/event/sample_ymohit2316_3487" class="number-box white"><div class="semibold">148</div>Photos</a></li>
+																						<li class="number-box-display"><a href="http://eventifier.com/event/sample_ymohit2316_3487/videos" class="number-box white"><div class="semibold">4</div>Videos</a></li>
+																						<li class="number-box-display"><a href="http://eventifier.com/event/sample_ymohit2316_3487/tweets" class="number-box white"><div class="semibold">899</div>Tweets</a></li>
+																						<li class="slides-box-display"><a href="http://eventifier.com/event/sample_ymohit2316_3487/slides" class="number-box white"><div class="semibold">0</div>Slides</a></li>
+																						<li class="number-box-display"><a href="http://eventifier.com/event/sample_ymohit2316_3487/contributors" class="red-black number-box white"><div class="semibold">207</div>Contributors</a></li>
+																					</ul>
+																				</div>
+																				<div class="event-box-footer"></div>
+																			</div>
+																		</div>
+																	</div>
+																	
+																		<div class="push-2">
+																			<div class="flushright">
+																				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+																				<a href="http://eventifier.com/del/event/9514" class="btn btn-danger">Confirm Delete</a>
+																			</div>
+																		</div>
+																	
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</li>
+							
+						</ul>
+					</div>
+					<%end%>
+					
+					<div class="col-sm-12 space-2-bottom text-center">
+		                <div class="space-1-top"><button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">Create an Event</button></div>
+		                <div class="space-1-top">
+		                    
+
+
+
+		                </div>
+			        </div>
+				
+			</div><!--/.col-lg-12-->
+		</div><!--/.row-->
+	</div><!--/.fluid-container-->
+</section>
+
+		</div>
+		
+		
+		
+		</div>
+
+		
+	
+
+		
+		
+			<script type="text/javascript" src="./Dashboard   Eventifier_files/bootstrap.min.js"></script>
+			<script>
+				$( ".navbar-toggle" ).click(function(){
+					this.classList.toggle( "active" );
+				});
+			</script>
+
+			
+	<div class="container">
+		<section class="branding-logo push-line fill-lightgray">
+			<a target="_blank" href="http://eventifier.com/" class="link-silent lightbluegray"><div class="text-center">Powered by&nbsp;&nbsp;<img src="./Dashboard   Eventifier_files/logo_blue_dark.png" alt="" style="width:110px"></div></a>
+		</section>
+	</div>
+	<!-- Embed settings -->
+	
+
+	<!-- Embed settings -->
+
+	<script type="text/javascript">
+		// expiry message
+		$(window).load(function(){
+			$('#update-modal').modal('show');
+		});
+
+		$(document).ready(function() {
+			$('.next').attr("rel","next");
+			$('.prev').attr("rel","previous");
+			$('a[title="Next Page"]').attr("rel","next");
+			$('a[title="Previous Page"]').attr("rel","previous");
+		});
+		
+		$(function () {
+			$("[rel='del-sponsor']").tooltip();
+		});
+		$(function () {
+			$("[rel='edit-desc']").tooltip();
+		});
+		$(function () {
+			$("[rel='del-popular']").tooltip();
+		});
+		// highlight subnav active menu
+		$(function(){
+			if ($('.subnav-ul').find('li.active').size() == 2){
+				if ($('.subnav-ul li:nth-child(2)').hasClass('active')){
+					$('.subnav-ul li:nth-child(2)').removeClass('active');
+				}
+			}
+		});
+		// fallback for profile image
+		$(".profile-pic").error(function () {
+			$(this).attr("src", "//s3.amazonaws.com/eventify_static/media_new/img/user.jpg");
+		});
+		
+	</script>
+
+	
+	
+	
+	

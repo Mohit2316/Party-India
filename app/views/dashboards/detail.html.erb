@@ -1,0 +1,64 @@
+<style>
+    .quote-content:after{
+      border-top-color: #F2F3F7;
+      border-right-color: #F2F3F7;
+    }
+    .press-source{
+      left: 135px;
+      bottom: 1em;
+      padding-top: 40px
+    }
+  </style>
+
+<div class="page">
+    
+    <div class="page-content">
+    
+<div class="container">
+  <div class="row" id="reg-form">
+    <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 push-2-top push-2-bottom">
+      <div class="rounded-rect hideoverflow">
+        <div class="legible">
+          <div class="containwidth  push-1-bottom" style="text-align:center">
+            <img src="http://partiko.s3-website-ap-southeast-1.amazonaws.com/images/favicons/apple-icon-60x60.png" alt="Partiko Logo"  />
+          </div>
+        </div>
+        <% if @event.picture_url!=nil%>
+          <img src=<%= @event.picture_url %> alt="Event Image" style="width:100%;height:400px;"/>
+          <% else%>
+          <img src=<%= @event.avatar.url %> alt="Event Image" style="width:100%;height:400px;"/>
+          <%end%>
+        <h1 class="col-sm-offset-1 push-1-top"><b><%= @event.name %></b></h1>
+        <h4 class="col-sm-offset-1 push-1-top"><i class="fa fa-ticket"></i> <b>Tickets Available</b></h4>
+        <h4 class="col-sm-offset-1 push-1-top"><i class="fa fa-map-marker"> </i><b> <%= @event.city %></b></h4>
+        <h6 class="col-sm-offset-2 "><%= @event.street_address %></h6>
+        <hr/>
+        <div class="row push-3-top push-half-bottom">
+          <h4 class="col-sm-10 col-sm-offset-1"><b>Event Details </b></h4>
+          <div class="col-sm-10 col-sm-offset-1 push-1-top pad-2-right">
+            <%= @event.description%>
+          </div>
+          
+        </div>
+        <hr>
+        <% if @event.businessowner_id == session[:user_id]%>
+        <p class="text-center push-1q-bottom space-neg-half-top regular normal"><a href="/events/<%=@event.id%>/edit" class="btn btn-primary">Edit Event</a></p>
+        <%end%>
+        <p class="text-center push-1q-bottom space-neg-half-top regular normal"><img src="https://s3-ap-southeast-1.amazonaws.com/partiko/img/devices.png" alt="Devices image" style="width:50%;"/></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+    </div>
+    
+    </div>
+
+    
+    
+    
+      
+
+      
+
+

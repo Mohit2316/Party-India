@@ -1,0 +1,134 @@
+<style>
+		.quote-content:after{
+			border-top-color: #F2F3F7;
+			border-right-color: #F2F3F7;
+		}
+		.press-source{
+			left: 135px;
+			bottom: 1em;
+			padding-top: 40px
+		}
+	</style>
+
+<div class="page">
+		
+		<div class="page-content">
+		
+<div class="container">
+	<div class="row" id="reg-form">
+		<div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 push-4-top push-2-bottom">
+			<div class="rounded-rect hideoverflow">
+				<div class="fill-blue-pattern legible">
+					<div class="containwidth push-2-top push-1-bottom">
+						<a href="/" class="logo centered"></a>
+					</div>
+				</div>
+				<div class="fill-lightgray">
+					<h2 class="text-center legible normal fill-whitefade push-half">Create your Account</h2>
+				</div>
+				<div class="row push-3-top push-half-bottom">
+					<div class="col-sm-6 col-xs-12 press pad-4-left pad-4-xs">
+						<div class="quote-content"><blockquote class="fill-lightgray regular push-1 rounded-rectangle">Partiko is the place to list and track all your local events.</blockquote></div>
+						<a target="_blank" href="http://www.eventmanagerblog.com/eventifier"><figure class="press-source" id="event-manager-blog"></figure></a>
+					</div>
+					<div class="col-sm-6 col-xs-12">
+						<form id="register-form" action="/account/register" method="post" class="pad-3-right pad-4-xs">
+							
+							
+								<input id="id_email" type="text" placeholder="Email" class="form-control" name="businessowner[email]" />
+								
+							
+								<input id="id_password1" type="password" placeholder="Password" class="form-control" name="businessowner[password]" />
+								
+							
+							<input id="company" type="text" placeholder="Company name" class="form-control" name="businessowner[company_name]">
+							<input id="companyWebsite" type="text" placeholder="Company website" class="form-control" name="businessowner[company_website]">
+							<input id="phone" type="text" placeholder="Phone number" class="form-control" name="businessowner[phone]">
+							
+							<!-- <select class="form-control">
+								<option value="" disabled selected="selected">No. of events in a year</option>
+								<option>Less than 5</option>
+								<option>Between 5 and 10</option>
+								<option>More than 10</option>
+							</select> -->
+							<div class="text-center push-1-top">
+								<input id="register-btn" type="submit" class="btn btn-blue pad-1 legible-prose" value="Create Account"/>
+							</div>
+						</form>
+					</div>
+				</div>
+				<hr>
+				<p class="text-center push-1q-bottom space-neg-half-top regular normal">Already a User?&nbsp;&nbsp;<a href="/account/login" class="btn btn-green">Log In</a></p>
+			</div>
+		</div>
+	</div>
+</div>
+
+		</div>
+		
+		</div>
+
+		
+		
+		
+			<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+			<script>
+				$( ".navbar-toggle" ).click(function(){
+					this.classList.toggle( "active" );
+				});
+			</script>
+
+			
+	<script src="//s3.amazonaws.com/eventify_static/media_new/js/jquery.validate.min.js"></script>
+    <script>
+		$(document).ready(function() {
+			// validate register form on keyup and submit
+			$.validator.addMethod("validphone", function(value, element) {
+			    return this.optional(element) || /^[\s\(\)+-]*([0-9][\s\(\)+-]*){6,20}$/i.test(value);
+			}, "Invalid phone number");
+			$("#register-form").validate({
+            	ignore : [],
+				rules: {
+					email: {
+				        required: true,
+				        email: true
+				    },
+					password1: {
+						required: true
+					},
+					company_name: {
+						required: true
+					},
+					phone_number: {
+				        validphone: true
+				    },
+				},
+				messages: {
+					email: {
+				        required: "Please enter your email",
+				        email: "Enter a valid email"
+				    },
+					password1: "Please enter password",
+					company_name: "Please enter company name",
+					phone_number: {
+				        validphoner: "Invalid phone number"
+				    },
+				},
+				submitHandler: function(form){
+					$('#register-btn').attr('disabled', 'disabled');
+					form.submit();
+				},
+				errorPlacement: function(error, element) {
+		            error.insertAfter(element); // default placement
+		        }
+			});
+		});
+	</script>
+	<script>
+		$("select.form-control").change(function () {
+		    if($(this).val() == "0") $(this).addClass("placeholder-text");
+		    else $(this).removeClass("placeholder-text")
+		});
+
+		$("select.form-control").change();
+	</script>

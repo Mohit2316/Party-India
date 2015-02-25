@@ -1,0 +1,48 @@
+
+
+
+
+<%= form_for(@businessowner , html: {class: 'pad-3-right pad-4-xs'}) do |f| %>
+  <% if @businessowner.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@businessowner.errors.count, "error") %> prohibited this businessowner from being saved:</h2>
+
+      <ul class="errorlist">
+      <% @businessowner.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+  <% if !flash.empty? %>
+  <ul class="errorlist">
+  <%= flash[:error] %>
+  </ul>
+  </div>
+  <% end%>
+
+  <div class="field">
+    
+    <%= f.text_field :company_name, id: "company", class:"form-control", placeholder: "Company Name", required: "required" %>
+  </div>
+  <div class="field">
+    
+    <%= f.email_field :email, id: "id_email", class:"form-control", placeholder: "Email", required: "required" %>
+  </div>
+  <div class="field">
+    <%= f.password_field :password, id: "id_password1", class:"form-control", placeholder: "Password", required: "required" %>
+    
+  </div>
+  <div class="field">
+    <%= f.text_field :company_website, id: "company_website", class:"form-control", placeholder: "Company Website" %>
+  </div>
+  <div class="field">
+   <%= f.text_field :phone, id: "id_phone", class:"form-control", placeholder: "Phone Number", required: "required" %>
+  </div>
+  
+  <div class="actions">
+    <%= f.submit "Create Account" , id:"register-btn",class: "btn btn-blue pad-1 legible-prose", required: "required"  %>
+    
+  </div>
+<% end %>

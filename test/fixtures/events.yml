@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  type: 
+  organizer: MyString
+  start_time: 2015-02-23 07:39:33
+  end_time: 2015-02-23 07:39:33
+  picture_url: MyString
+  description: MyString
+  street_address: MyString
+  city: MyString
+  country: MyString
+  zip: MyString
+  latitude: 9.99
+  longitude: 9.99
+
+two:
+  name: MyString
+  type: 
+  organizer: MyString
+  start_time: 2015-02-23 07:39:33
+  end_time: 2015-02-23 07:39:33
+  picture_url: MyString
+  description: MyString
+  street_address: MyString
+  city: MyString
+  country: MyString
+  zip: MyString
+  latitude: 9.99
+  longitude: 9.99

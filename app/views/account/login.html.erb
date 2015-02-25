@@ -1,0 +1,79 @@
+
+
+<div class="page">
+		
+		<div class="page-content">
+		
+	<div class="center-block rounded-rect hideoverflow">
+		<div class="fill-blue extralarge-prose">
+			<div class="containwidth form-header push-1-top push-half-bottom">
+				<a href="/" class="square-logo centered"></a>
+			</div>
+		</div>
+		<div class="fill-lightgray">
+			<h2 class="text-center legible normal fill-whitefade push-half">Log in to your account </h2><br/>
+			<p class="error"><%= notice %></p>
+		</div>
+		<div class="row push-line-top push-half-bottom">
+			<div class="col-sm-8 col-xs-8 col-sm-offset-2 col-xs-offset-2">
+				
+	
+    <%= form_for(@businessowner ,url:{action:"validate",controller:"businessowners"} , html: {class: 'login_form'}) do |f| %>
+  <% if @businessowner.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@businessowner.errors.count, "error") %> prohibited this businessowner from being saved:</h2>
+
+      <ul>
+      <% @businessowner.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <% if !flash.empty? %>
+  <div class="field">
+  <ul class="errorlist">
+  <%= flash[:error] %>
+  </ul>
+  </div>
+  <% end%>
+  
+  <div class="field">
+    
+    <%= f.email_field :email, id: "id_email", class:"form-control", placeholder: "Email",required: "required" %>
+  </div>
+  <div class="field">
+    <%= f.password_field :password, id: "id_password1", class:"form-control", placeholder: "Password",required: "required" %>
+    
+  </div>
+  
+  
+  <div class="text-center push-1-top">
+    <%= f.submit "Log In" ,class: "btn btn-blue pad-1 legible-prose"  %>
+  </div>
+<% end %>
+
+			</div>		
+		</div>       
+		<hr>
+		
+	<div class="text-center push-1q-bottom regular normal">
+		<p class="push-1q-bottom link-silent"><a href="/account/fpassword" class=" mediumgray">Forgot your password?</a></p>
+		<p class="">Dont have an Account? <a href="/account/register" class="btn btn-green">Sign Up</a></p>
+	</div>
+
+	</div>
+
+		</div>
+		
+		</div>
+
+		
+		
+		
+			
+			<script>
+				$( ".navbar-toggle" ).click(function(){
+					this.classList.toggle( "active" );
+				});
+			</script>
